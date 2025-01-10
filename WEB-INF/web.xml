@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+
+    <display-name>ECommerceFleurs</display-name>
+
+    <!-- Déclaration des servlets -->
+    <servlet>
+        <servlet-name>ProduitServlet</servlet-name>
+        <servlet-class>controller.ProduitServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProduitServlet</servlet-name>
+        <url-pattern>/produits</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PanierServlet</servlet-name>
+        <servlet-class>controller.PanierServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PanierServlet</servlet-name>
+        <url-pattern>/panier</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+    <servlet-name>UtilisateurServlet</servlet-name>
+    <servlet-class>controller.UtilisateurServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UtilisateurServlet</servlet-name>
+        <url-pattern>/utilisateur</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+    <servlet-name>AdminServlet</servlet-name>
+    <servlet-class>controller.AdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+    <servlet-name>CommandeServlet</servlet-name>
+    <servlet-class>controller.CommandeServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+    <servlet-name>CommandeServlet</servlet-name>
+    <url-pattern>/commande</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+    <servlet-name>CategoriesServlet</servlet-name>
+    <servlet-class>controller.CategoriesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CategoriesServlet</servlet-name>
+        <url-pattern>/categories</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>ContactServlet</servlet-name>
+        <servlet-class>controller.ContactServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ContactServlet</servlet-name>
+        <url-pattern>/contact</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+    <servlet-name>ProduitDetailServlet</servlet-name>
+    <servlet-class>controller.ProduitDetailServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ProduitDetailServlet</servlet-name>
+        <url-pattern>/produit</url-pattern>
+    </servlet-mapping>
+
+
+
+    <multipart-config>
+        <location>/tmp</location>
+        <max-file-size>10485760</max-file-size> <!-- Taille max : 10 MB -->
+        <max-request-size>20971520</max-request-size> <!-- Taille max de la requête : 20 MB -->
+        <file-size-threshold>5242880</file-size-threshold> <!-- Taille max en mémoire : 5 MB -->
+    </multipart-config>
+
+    <!-- Configuration pour les fichiers statiques -->
+    <servlet>
+        <servlet-name>default</servlet-name>
+        <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>1</param-value>
+        </init-param>
+        <init-param>
+            <param-name>listings</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>default</servlet-name>
+        <url-pattern>/images/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- Fichiers de bienvenue -->
+    <welcome-file-list>
+        <welcome-file>views/index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>

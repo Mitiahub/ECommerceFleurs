@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Fleurs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #fdfdfd;
+            color: #333;
+        }
+
+    header {
+        background-color: #ff6f91;
+        padding: 20px;
+        text-align: center;
+    }
+
+    header h1 {
+        margin: 0;
+        color: #fff;
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+
+    nav {
+        display: flex;
+        justify-content: center;
+        background-color: #ffe3e8;
+        padding: 15px;
+    }
+
+    nav a {
+        color: #ff6f91;
+        text-decoration: none;
+        margin: 0 15px;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+
+    nav a:hover {
+        color: #ff3d63;
+    }
+
+    .container {
+        max-width: 1200px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 20px;
+    }
+
+    .product-card {
+        background-color: #fff;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .product-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .product-card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .product-card h3 {
+        margin: 15px;
+        font-size: 1.5rem;
+        color: #ff6f91;
+    }
+
+    .product-card p {
+        margin: 0 15px 15px;
+        font-size: 1rem;
+        color: #666;
+    }
+
+    .product-card button {
+        display: block;
+        width: calc(100% - 30px);
+        margin: 0 auto 15px;
+        background-color: #ff6f91;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1rem;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .product-card button:hover {
+        background-color: #ff3d63;
+    }
+
+    footer {
+        background-color: #ffe3e8;
+        text-align: center;
+        padding: 15px;
+        color: #ff6f91;
+        font-weight: 500;
+    }
+
+    .form-container {
+        max-width: 600px;
+        margin: 40px auto;
+        padding: 30px;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-container input, .form-container button {
+        width: 100%;
+        margin: 10px 0;
+        padding: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    .form-container button {
+        background-color: #ff6f91;
+        color: white;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .form-container button:hover {
+        background-color: #ff3d63;
+    }
+
+    .order-history {
+        max-width: 1000px;
+        margin: 20px auto;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    .order-history th, .order-history td {
+        border: 1px solid #ddd;
+        padding: 15px;
+        text-align: left;
+    }
+
+    .order-history th {
+        background-color: #ff6f91;
+        color: white;
+    }
+</style>
+</head>
+<body>
+
+<header>
+    <h1>Bienvenue sur notre boutique de fleurs Éclat Floral</h1>
+</header>
+
+<nav>
+    <a href="#catalogue">Accueil</a>
+    <a href="#product">Produit</a>
+    <a href="#panier">Panier</a>
+    <a href="#connexion">Connexion</a>
+    <a href="#historique">Historique</a>
+</nav>
+
+<!-- Catalogue -->
+<div id="catalogue" class="container">
+    <h2>Nos Produits</h2>
+    <div class="product-card">
+        <img src="https://plus.unsplash.com/premium_photo-1676272747130-348694463771?q=80&w=1769&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Rose">
+        <h3>Bouquet de Roses</h3>
+        <p>Prix : 20€</p>
+        <button>Voir Détails</button>
+    </div>
+    <div class="product-card">
+        <img src="images/fleurs_solo/fleurs3.jpg" alt="Tulipe">
+        <h3>Tournesol</h3>
+        <p>Prix : 15€</p>
+        <button>Voir Détails</button>
+    </div>
+    <h3>Amour et Romances</h3>
+<div class="product-grid">
+    <div class="product-card">
+        <img src="images/occasions/amour_et_romances/amour1.jpg" alt="Amour 1">
+        <h3>Rose Passion</h3>
+        <p>Parfait pour un geste romantique.</p>
+        <button>Ajouter au Panier</button>
+    </div>
+</div>
+
+<h3>Anniversaire</h3>
+<div class="product-grid">
+    <div class="product-card">
+        <img src="images/occasions/anniversaire/anniv1.jpg" alt="Anniversaire 1">
+        <h3>Bouquet Festif</h3>
+        <p>Un bouquet coloré pour célébrer un anniversaire.</p>
+        <button>Ajouter au Panier</button>
+    </div>
+</div>
+</div>
+
+<!-- Produit -->
+<div id="product" class="container">
+    <h2>Détails Produit</h2>
+    <div class="product-card">
+        <img src="https://plus.unsplash.com/premium_photo-1676272747130-348694463771?q=80&w=1769&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Rose">
+        <h3>Bouquet de Roses</h3>
+        <p>Description : Un magnifique bouquet de roses rouges fraîches.</p>
+        <p>Prix : 20€</p>
+        <button>Ajouter au Panier</button>
+    </div>
+</div>
+
+<!-- Panier -->
+<div id="panier" class="container">
+    <h2>Votre Panier</h2>
+    <table class="order-history">
+        <tr>
+            <th>Produit</th>
+            <th>Quantité</th>
+            <th>Prix</th>
+        </tr>
+        <tr>
+            <td>Bouquet de Roses</td>
+            <td>1</td>
+            <td>20€</td>
+        </tr>
+    </table>
+    <h3>Total : 20€</h3>
+    <button>Valider la Commande</button>
+</div>
+
+<!-- Connexion / Inscription -->
+<div id="connexion" class="container">
+    <h2>Connexion</h2>
+    <div class="form-container">
+        <form>
+            <input type="email" placeholder="Email" required>
+            <input type="password" placeholder="Mot de passe" required>
+            <button>Se Connecter</button>
+        </form>
+    </div>
+
+    <h2>Inscription</h2>
+    <div class="form-container">
+        <form>
+            <input type="text" placeholder="Nom" required>
+            <input type="email" placeholder="Email" required>
+            <input type="password" placeholder="Mot de passe" required>
+            <input type="password" placeholder="Confirmer le mot de passe" required>
+            <button>S'inscrire</button>
+        </form>
+    </div>
+</div>
+
+<!-- Historique -->
+<div id="historique" class="container">
+    <h2>Historique des Commandes</h2>
+    <table class="order-history">
+        <tr>
+            <th>Numéro de Commande</th>
+            <th>Date</th>
+            <th>Montant</th>
+            <th>Statut</th>
+        </tr>
+        <tr>
+            <td>#12345</td>
+            <td>28/12/2024</td>
+            <td>20€</td>
+            <td>Livrée</td>
+        </tr>
+    </table>
+</div>
+
+<footer>
+    &copy; 2024 E-commerce Fleurs. Tous droits réservés.
+</footer>
+
+</body>
+</html>

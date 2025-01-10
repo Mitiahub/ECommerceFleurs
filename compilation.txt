@@ -1,0 +1,1 @@
+javac -cp "C:\Program Files\Apache Software Foundation\Tomcat 8.5\lib\servlet-api.jar;C:\Program Files\Apache Software Foundation\Tomcat 8.5\lib\*" -d . controller/*.java model/*.java dao/*.java utils/*.java
