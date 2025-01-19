@@ -53,3 +53,21 @@ INSERT INTO Produit (nom, description, prix, id_categorie, stock, image) VALUES
 INSERT INTO Utilisateur (nom, email, mot_de_passe, role) VALUES
 ('Mitia', 'mitia@example.com', 'mitia', 'utilisateur'),
 ('Admin', 'admin@example.com', 'admin', 'admin');
+
+---------------------------------------
+-- Mettre des produits spécifiques en promotion
+UPDATE Produit 
+SET is_promotion = TRUE 
+WHERE nom IN ('Bouquet Joyeux', 'Bouquet Champetre', 'Plante Grasse', 'Bouquet Romantique');
+
+-- Exemple basé sur l'id_produit
+UPDATE Produit 
+SET is_promotion = TRUE 
+WHERE id_produit IN (2, 4, 6, 15);
+
+
+-- Vérifier les produits en promotion
+SELECT * FROM Produit WHERE is_promotion = TRUE;
+
+-- Vérifier les produits sans promotion
+SELECT * FROM Produit WHERE is_promotion = FALSE;

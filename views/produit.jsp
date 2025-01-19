@@ -1,4 +1,3 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -65,13 +64,18 @@
             background-color: white;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
-            text-align: center;
         }
-        img {
-            max-width: 100%;
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .product-info img {
+            max-width: 300px;
             height: auto;
             border-radius: 10px;
             margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
         .product-info h1 {
             font-size: 2em;
@@ -85,6 +89,31 @@
             font-weight: bold;
             color: #228b22;
         }
+        .actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .actions label {
+            font-size: 1em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        .actions input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            font-size: 1em;
+            text-align: center;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .actions input[type="number"]:focus {
+            border-color: #228b22;
+            box-shadow: 0 0 5px rgba(34, 139, 34, 0.5);
+        }
         .actions button {
             padding: 10px 20px;
             background-color: #228b22;
@@ -93,10 +122,15 @@
             border-radius: 5px;
             font-size: 1em;
             cursor: pointer;
-            margin-top: 20px;
+            transition: background-color 0.3s, transform 0.3s;
         }
         .actions button:hover {
             background-color: #1a6f1a;
+            transform: scale(1.1);
+        }
+        .actions button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -107,6 +141,7 @@
             <a href="${pageContext.request.contextPath}/views/index.jsp">Accueil</a>
             <a href="${pageContext.request.contextPath}/produits">Boutique</a>
             <a href="${pageContext.request.contextPath}/categories">Categories</a>
+             <a href="${pageContext.request.contextPath}/promotions">Promotions</a>
             <a href="${pageContext.request.contextPath}/contact">Contact</a>
             <div class="icons">
                 <a href="${pageContext.request.contextPath}/panier">
@@ -135,12 +170,13 @@
                     <form action="${pageContext.request.contextPath}/panier" method="post">
                         <input type="hidden" name="action" value="ajouter">
                         <input type="hidden" name="idProduit" value="${produit.idProduit}">
+                        <label for="quantite">Quantite :</label>
+                        <input type="number" id="quantite" name="quantite" value="1" min="1" max="${produit.stock}" required>
                         <button type="submit">Ajouter au Panier</button>
                     </form>
                 </div>
             </c:when>
             <c:otherwise>
-                <p>Produit non trouvé.</p>
             </c:otherwise>
         </c:choose>
     </div>

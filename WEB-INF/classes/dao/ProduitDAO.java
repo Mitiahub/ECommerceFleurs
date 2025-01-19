@@ -2,6 +2,8 @@ package dao;
 
 import model.Produit;
 import utils.DBConnection;
+import model.Promotion;
+
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -28,7 +30,7 @@ public class ProduitDAO {
 
     // Modifier un produit
     public void modifierProduit(Produit produit) {
-        String query = "UPDATE Produit SET nom = ?, description = ?, prix = ?, id_categorie = ?, stock = ?, image = ? WHERE id_produit = ?";
+        String query = "UPDATE Produit SET nom = ?, description = ?, prix = ?, id_categorie = ?, stock = ?, image = ?, is_promotion = ? WHERE id_produit = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(query)) {
             ps.setString(1, produit.getNom());
@@ -37,7 +39,8 @@ public class ProduitDAO {
             ps.setInt(4, produit.getIdCategorie());
             ps.setInt(5, produit.getStock());
             ps.setString(6, produit.getImage());
-            ps.setInt(7, produit.getIdProduit());
+            ps.setBoolean(7, produit.isPromotion());
+            ps.setInt(8, produit.getIdProduit());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -71,7 +74,8 @@ public class ProduitDAO {
                         rs.getDouble("prix"),
                         rs.getInt("id_categorie"),
                         rs.getInt("stock"),
-                        rs.getString("image")
+                        rs.getString("image"),
+                        rs.getBoolean("is_promotion")
                 );
             }
         } catch (SQLException e) {
@@ -96,9 +100,9 @@ public class ProduitDAO {
                         rs.getDouble("prix"),
                         rs.getInt("id_categorie"),
                         rs.getInt("stock"),
-                        rs.getString("image")
+                        rs.getString("image"),
+                        rs.getBoolean("is_promotion")
                 ));
-                
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -137,7 +141,8 @@ public class ProduitDAO {
                         rs.getDouble("prix"),
                         rs.getInt("id_categorie"),
                         rs.getInt("stock"),
-                        rs.getString("image")
+                        rs.getString("image"),
+                        rs.getBoolean("is_promotion")
                 ));
             }
         } catch (SQLException e) {
@@ -145,74 +150,136 @@ public class ProduitDAO {
         }
         return produits;
     }
-    public void ajouterProduitCommande(int idCommande, int idProduit, int quantite) {
-    String query = "INSERT INTO Contient (id_commande, id_produit, quantite) VALUES (?, ?, ?)";
-    try (Connection conn = DBConnection.getConnection();
-         PreparedStatement ps = conn.prepareStatement(query)) {
-        ps.setInt(1, idCommande);
-        ps.setInt(2, idProduit);
-        ps.setInt(3, quantite);
-        ps.executeUpdate();
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-
-    }
-    // Méthode pour filtrer les produits
-    public List<Produit> filtrerProduits(int idCategorie, double prixMin, double prixMax) {
-    List<Produit> produits = new ArrayList<>();
-    String query = "SELECT * FROM Produit WHERE (id_categorie = ? OR ? = -1) AND prix BETWEEN ? AND ?";
-    try (Connection conn = DBConnection.getConnection();
-         PreparedStatement ps = conn.prepareStatement(query)) {
-        ps.setInt(1, idCategorie);
-        ps.setInt(2, idCategorie);
-        ps.setDouble(3, prixMin);
-        ps.setDouble(4, prixMax);
-        ResultSet rs = ps.executeQuery();
-        while (rs.next()) {
-            produits.add(new Produit(
-                rs.getInt("id_produit"),
-                rs.getString("nom"),
-                rs.getString("description"),
-                rs.getDouble("prix"),
-                rs.getInt("id_categorie"),
-                rs.getInt("stock"),
-                rs.getString("image")
-            ));
+    // Filtrer les produits par catégorie et plage de prix
+        public List<Produit> filtrerProduits(int idCategorie, double prixMin, double prixMax) {
+            String query = "SELECT * FROM Produit WHERE id_categorie = ? AND prix BETWEEN ? AND ?";
+            List<Produit> produitsFiltres = new ArrayList<>();
+            try (Connection conn = DBConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(query)) {
+                ps.setInt(1, idCategorie);
+                ps.setDouble(2, prixMin);
+                ps.setDouble(3, prixMax);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    produitsFiltres.add(new Produit(
+                            rs.getInt("id_produit"),
+                            rs.getString("nom"),
+                            rs.getString("description"),
+                            rs.getDouble("prix"),
+                            rs.getInt("id_categorie"),
+                            rs.getInt("stock"),
+                            rs.getString("image"),
+                            rs.getBoolean("is_promotion")
+                    ));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return produitsFiltres;
         }
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }
-    return produits;
+
+    // Ajouter un produit à une commande
+    public void ajouterProduitCommande(int idCommande, int idProduit, int quantite) {
+        String query = "INSERT INTO Contient (id_commande, id_produit, quantite) VALUES (?, ?, ?)";
+        try (Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, idCommande);
+            ps.setInt(2, idProduit);
+            ps.setInt(3, quantite);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public List<Produit> getPlantesVertes() {
-    String query = "SELECT * FROM Produit WHERE is_plante_verte = TRUE";
-    List<Produit> plantesVertes = new ArrayList<>();
+
+   
+    // Obtenir les plantes vertes
+        public List<Produit> getPlantesVertes() {
+            String query = "SELECT * FROM Produit WHERE is_plante_verte = TRUE";
+            List<Produit> plantesVertes = new ArrayList<>();
+            try (Connection conn = DBConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    plantesVertes.add(new Produit(
+                            rs.getInt("id_produit"),
+                            rs.getString("nom"),
+                            rs.getString("description"),
+                            rs.getDouble("prix"),
+                            rs.getInt("id_categorie"),
+                            rs.getInt("stock"),
+                            rs.getString("image"),
+                            rs.getBoolean("is_promotion")
+                    ));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return plantesVertes;
+        }
+
+// Obtenir les plantes sensibles à la lumière
+        public List<Produit> getPlantesSensiblesALumiere() {
+            String query = "SELECT * FROM Produit WHERE description LIKE '%sensible lumière%'";
+            List<Produit> plantesSensibles = new ArrayList<>();
+            try (Connection conn = DBConnection.getConnection();
+                PreparedStatement ps = conn.prepareStatement(query);
+                ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) {
+                    plantesSensibles.add(new Produit(
+                            rs.getInt("id_produit"),
+                            rs.getString("nom"),
+                            rs.getString("description"),
+                            rs.getDouble("prix"),
+                            rs.getInt("id_categorie"),
+                            rs.getInt("stock"),
+                            rs.getString("image"),
+                            rs.getBoolean("is_promotion")
+                    ));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return plantesSensibles;
+        }
+
+
+    // Obtenir les produits en promotion
+          public List<Promotion> getProduitsEnPromotion() {
+    String query = "SELECT p.id_produit, p.nom, p.description, p.prix, p.image, " +
+                   "pr.id_promotion, pr.reduction, pr.date_debut, pr.date_fin " +
+                   "FROM Produit p " +
+                   "JOIN Promotions pr ON p.id_produit = pr.id_produit";
+    List<Promotion> promotions = new ArrayList<>();
+
     try (Connection conn = DBConnection.getConnection();
          PreparedStatement ps = conn.prepareStatement(query);
          ResultSet rs = ps.executeQuery()) {
+
         while (rs.next()) {
-            plantesVertes.add(new Produit(
+            Promotion promotion = new Promotion(
+                rs.getInt("id_promotion"),
                 rs.getInt("id_produit"),
                 rs.getString("nom"),
                 rs.getString("description"),
                 rs.getDouble("prix"),
-                rs.getInt("id_categorie"),
-                rs.getInt("stock"),
-                rs.getString("image")
-            ));
+                rs.getDouble("reduction"),
+                rs.getDate("date_debut"),
+                rs.getDate("date_fin"),
+                rs.getString("image") // Ajout de l'image
+            );
+            promotions.add(promotion);
         }
     } catch (SQLException e) {
         e.printStackTrace();
     }
-    return plantesVertes;
-    
-    }
+    return promotions;
+}
 
-   public List<Produit> getPlantesSensiblesALumiere() {
-        String query = "SELECT * FROM Produit WHERE image IN ('images/plantes_decoratives/plante1.jpg', 'images/plantes_decoratives/plante2.jpg', 'images/plantes_decoratives/plante3.jpg')";
+          public List<Produit> getProduitsNonEnPromotion() {
         List<Produit> produits = new ArrayList<>();
+        String query = "SELECT * FROM Produit WHERE id_produit NOT IN (SELECT id_produit FROM Promotions)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(query);
              ResultSet rs = ps.executeQuery()) {
@@ -224,7 +291,8 @@ public class ProduitDAO {
                         rs.getDouble("prix"),
                         rs.getInt("id_categorie"),
                         rs.getInt("stock"),
-                        rs.getString("image")
+                        rs.getString("image"),
+                        false // Par défaut non en promotion
                 ));
             }
         } catch (SQLException e) {
@@ -232,4 +300,61 @@ public class ProduitDAO {
         }
         return produits;
     }
+
+       public List<Promotion> getAllPromotions() {
+        List<Promotion> promotions = new ArrayList<>();
+        String query = "SELECT p.id_produit, p.nom, p.description, p.prix, promo.reduction, promo.date_debut, promo.date_fin " +
+                       "FROM Produit p " +
+                       "JOIN Promotions promo ON p.id_produit = promo.id_produit";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                Promotion promotion = new Promotion();
+                promotion.setIdProduit(rs.getInt("id_produit"));
+                promotion.setNom(rs.getString("nom"));
+                promotion.setDescription(rs.getString("description"));
+                promotion.setPrix(rs.getDouble("prix"));
+                promotion.setReduction(rs.getDouble("reduction"));
+                promotion.setDateDebut(rs.getDate("date_debut"));
+                promotion.setDateFin(rs.getDate("date_fin"));
+                promotions.add(promotion);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return promotions;
+    }
+
+
+        public boolean ajouterProduitEnPromotion(int idProduit, double reduction, Date dateDebut, Date dateFin) {
+        String query = "INSERT INTO Promotions (id_produit, reduction, date_debut, date_fin) VALUES (?, ?, ?, ?)";
+        try (Connection connection = DBConnection.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, idProduit);
+            preparedStatement.setDouble(2, reduction);
+            preparedStatement.setDate(3, dateDebut);
+            preparedStatement.setDate(4, dateFin);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0; // Retourne true si une ligne a été insérée
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false; // Retourne false en cas d'erreur
+        }
+    }
+    
+        public boolean retirerProduitDePromotion(int idProduit) {
+        String query = "DELETE FROM Promotions WHERE id_produit = ?";
+        try (Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, idProduit);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0; // Retourne true si une ligne a été supprimée
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Retourne false en cas d'erreur
+        }
+    }
+
 }

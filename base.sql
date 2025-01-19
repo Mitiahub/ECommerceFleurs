@@ -32,6 +32,9 @@ UPDATE Produit
 SET is_plante_verte = TRUE
 WHERE nom IN ('Plante Grasse', 'Fougere Fraiche', 'Bonsai Miniature');
 
+ALTER TABLE Produit
+ADD COLUMN is_promotion BOOLEAN DEFAULT FALSE;
+
 
 -- Table Commande
 CREATE TABLE Commande (

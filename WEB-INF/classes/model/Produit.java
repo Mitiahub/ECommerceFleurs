@@ -8,12 +8,13 @@ public class Produit {
     private int idCategorie;
     private int stock;
     private String image;
+    private boolean isPromotion; // Indique si le produit est en promotion
 
     // Constructeur par défaut (nécessaire pour certains frameworks ou utilisations)
     public Produit() {}
 
     // Constructeur complet (utilisé pour modifier ou récupérer des produits)
-    public Produit(int idProduit, String nom, String description, double prix, int idCategorie, int stock, String image) {
+    public Produit(int idProduit, String nom, String description, double prix, int idCategorie, int stock, String image, boolean isPromotion) {
         this.idProduit = idProduit;
         this.nom = nom;
         this.description = description;
@@ -21,9 +22,10 @@ public class Produit {
         this.idCategorie = idCategorie;
         this.stock = stock;
         this.image = image;
+        this.isPromotion = isPromotion;
     }
 
-    // Constructeur sans idProduit (utilisé pour ajouter un produit)
+    // Constructeur sans idProduit (utilisé pour ajouter un produit sans promotion par défaut)
     public Produit(String nom, String description, double prix, int idCategorie, int stock, String image) {
         this.nom = nom;
         this.description = description;
@@ -31,6 +33,7 @@ public class Produit {
         this.idCategorie = idCategorie;
         this.stock = stock;
         this.image = image;
+        this.isPromotion = false; // Par défaut, le produit n'est pas en promotion
     }
 
     // Getters et Setters
@@ -90,6 +93,14 @@ public class Produit {
         this.image = image;
     }
 
+    public boolean isPromotion() {
+        return isPromotion;
+    }
+
+    public void setPromotion(boolean promotion) {
+        this.isPromotion = promotion;
+    }
+
     // Méthode utilitaire pour afficher les informations du produit
     @Override
     public String toString() {
@@ -101,6 +112,7 @@ public class Produit {
                 ", idCategorie=" + idCategorie +
                 ", stock=" + stock +
                 ", image='" + image + '\'' +
+                ", isPromotion=" + isPromotion +
                 '}';
     }
 }

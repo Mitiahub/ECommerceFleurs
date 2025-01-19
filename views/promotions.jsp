@@ -1,16 +1,22 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Contactez-nous</title>
+    <title>Produits en Promotion - Flora</title>
+    <meta charset="UTF-8">
     <style>
+        /* Global styles */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f5f5f5;
             color: #333;
         }
-                nav {
+
+        /* Navbar styles */
+               nav {
             background-color: #228b22;
             display: flex;
             justify-content: space-between;
@@ -75,96 +81,103 @@
             background-color: #d62828;
             transform: translateY(-3px);
         }
-
-        .logo {
-            font-size: 1.8em;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .links {
-            display: flex;
-            align-items: center;
-        }
-        .links a {
-            color: white;
-            text-decoration: none;
-            margin-right: 15px;
-            font-size: 1em;
-            transition: color 0.3s;
-        }
-        .links a:hover {
-            color: #ffcc00;
-        }
-        .icons a img {
-            width: 25px;
-            height: 25px;
-            margin-left: 10px;
-            cursor: pointer;
-        }
-        .btn-deconnexion {
-            color: white;
-            text-decoration: none;
-            font-weight: bold;
-            margin-left: 10px;
-            padding: 5px 10px;
-            background-color: #ff4d4d;
-            border-radius: 5px;
-            transition: background-color 0.3s;
-        }
-        .btn-deconnexion:hover {
-            background-color: #cc0000;
-        }
+        /* Content */
         .container {
-            max-width: 600px;
+            max-width: 1200px;
             margin: 50px auto;
             padding: 20px;
             background-color: white;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
-        }
-        h1 {
             text-align: center;
+            animation: fadeIn 2s ease-in-out;
+        }
+        .container h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
             color: #228b22;
         }
-        form {
-            display: flex;
-            flex-direction: column;
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
         }
-        label {
+        .product-card {
+            background-color: #fdfdfd;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .product-card:hover {
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .product-card img {
+            max-width: 100%;
+            height: auto;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+        .product-card h2 {
+            font-size: 1.5em;
+            color: #333;
+            margin: 10px 0;
+        }
+        .product-card .price {
+            font-size: 1.2em;
             font-weight: bold;
-            margin-top: 10px;
+            color: #228b22;
+            margin: 10px 0;
         }
-        input, textarea, button {
-            margin-top: 5px;
-            padding: 10px;
-            font-size: 1em;
+        .product-card .reduction {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #e63946;
+            margin: 10px 0;
         }
-        button {
+        .product-card button {
             background-color: #228b22;
             color: white;
             border: none;
+            padding: 10px 20px;
             border-radius: 5px;
+            font-size: 1em;
             cursor: pointer;
-            margin-top: 15px;
+            transition: background-color 0.3s, transform 0.3s;
         }
-        button:hover {
+        .product-card button:hover {
             background-color: #1a6f1a;
+            transform: scale(1.05);
         }
-        .message {
-            margin-top: 15px;
+
+        /* Footer */
+        footer {
+            background-color: #228b22;
+            color: white;
             text-align: center;
-            font-weight: bold;
+            padding: 10px 0;
+            position: relative;
+            margin-top: 20px;
         }
-        .success {
-            color: #228b22;
-        }
-        .error {
-            color: #ff4d4d;
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Navbar -->
         <nav>
         <div class="logo">Flora</div>
         <div class="links">
@@ -190,26 +203,33 @@
         </div>
     </nav>
 
+
+    <!-- Container -->
     <div class="container">
-        <h1>Contactez-nous</h1>
-        <form action="${pageContext.request.contextPath}/contact" method="post">
-            <label for="nom">Nom :</label>
-            <input type="text" id="nom" name="nom" required>
-            
-            <label for="email">Email :</label>
-            <input type="email" id="email" name="email" required>
-            
-            <label for="message">Message :</label>
-            <textarea id="message" name="message" rows="5" required></textarea>
-            
-            <button type="submit">Envoyer</button>
-        </form>
-        <c:if test="${not empty success}">
-            <p class="message success">${success}</p>
-        </c:if>
-        <c:if test="${not empty erreur}">
-            <p class="message error">${erreur}</p>
+        <h1>Produits en Promotion</h1>
+        <div class="product-grid">
+            <c:forEach var="produit" items="${promotions}">
+                <div class="product-card">
+                    <img src="${produit.image}" alt="${produit.nom}">
+                    <h2>${produit.nom}</h2>
+                    <p class="price">${produit.prix} €</p>
+                    <p class="reduction">Réduction : ${produit.reduction} %</p>
+                    <form action="panier" method="post">
+                        <input type="hidden" name="action" value="ajouter">
+                        <input type="hidden" name="idProduit" value="${produit.idProduit}">
+                        <button type="submit">Ajouter au Panier</button>
+                    </form>
+                </div>
+            </c:forEach>
+        </div>
+        <c:if test="${empty promotions}">
+            <p>Aucun produit en promotion pour le moment.</p>
         </c:if>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>2025 Flora. Tous droits réservés.</p>
+    </footer>
 </body>
 </html>

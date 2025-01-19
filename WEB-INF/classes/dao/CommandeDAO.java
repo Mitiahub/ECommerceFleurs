@@ -37,26 +37,25 @@ public class CommandeDAO {
         return commandes;
     }
 
-   // Mise à jour du statut d'une commande
+    // Mise à jour du statut d'une commande
     public void updateStatutCommande(int idCommande, String statut) {
-    String query = "UPDATE Commande SET statut = ? WHERE id_commande = ?";
-    try (Connection conn = DBConnection.getConnection();
-         PreparedStatement ps = conn.prepareStatement(query)) {
-        ps.setString(1, statut);
-        ps.setInt(2, idCommande);
-        int rowsAffected = ps.executeUpdate();
+        String query = "UPDATE Commande SET statut = ? WHERE id_commande = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setString(1, statut);
+            ps.setInt(2, idCommande);
+            int rowsAffected = ps.executeUpdate();
 
-        if (rowsAffected > 0) {
-            System.out.println("Commande mise à jour avec succès : ID = " + idCommande + ", Statut = " + statut);
-        } else {
-            System.out.println("Aucune commande trouvée pour mise à jour : ID = " + idCommande);
-        }
-    } catch (SQLException e) {
-        e.printStackTrace();
-        System.err.println("Erreur lors de la mise à jour du statut de la commande : " + e.getMessage());
+            if (rowsAffected > 0) {
+                System.out.println("Commande mise à jour avec succès : ID = " + idCommande + ", Statut = " + statut);
+            } else {
+                System.out.println("Aucune commande trouvée pour mise à jour : ID = " + idCommande);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("Erreur lors de la mise à jour du statut de la commande : " + e.getMessage());
         }
     }
-
 
     // Supprimer une commande
     public void supprimerCommande(int idCommande) {
@@ -114,14 +113,16 @@ public class CommandeDAO {
 
                     while (rsProduits.next()) {
                         Produit produit = new Produit(
-                                rsProduits.getInt("id_produit"),
-                                rsProduits.getString("nom"),
-                                rsProduits.getString("description"),
-                                rsProduits.getDouble("prix"),
-                                rsProduits.getInt("id_categorie"),
-                                rsProduits.getInt("stock"),
-                                rsProduits.getString("image")
+                            rsProduits.getInt("id_produit"),
+                            rsProduits.getString("nom"),
+                            rsProduits.getString("description"),
+                            rsProduits.getDouble("prix"),
+                            rsProduits.getInt("id_categorie"),
+                            rsProduits.getInt("stock"),
+                            rsProduits.getString("image"),
+                            rsProduits.getBoolean("is_promotion") // Assurez-vous que la colonne `is_promotion` existe
                         );
+
                         int quantite = rsProduits.getInt("quantite");
                         produits.put(produit, quantite);
                     }

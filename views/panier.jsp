@@ -13,14 +13,72 @@
             background-color: #f5f5f5;
             color: #333;
         }
-        nav {
+            nav {
             background-color: #228b22;
-            color: white;
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 10px 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: fadeIn 1.5s ease-in-out;
         }
+        nav .links {
+            display: flex;
+            align-items: center;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 1em;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #d4d4d4;
+        }
+        nav .logo {
+            font-size: 1.5em;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: white;
+        }
+        nav .icons {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        nav .icons img {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 2px solid white;
+            transition: border-color 0.3s, transform 0.3s;
+            cursor: pointer;
+        }
+        nav .icons img:hover {
+            border-color: #d4d4d4;
+            transform: rotate(360deg);
+        }
+        .btn-deconnexion {
+            color: white;
+            background-color: #e63946;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .btn-deconnexion:hover {
+            background-color: #d62828;
+            transform: translateY(-3px);
+        }
+
         .logo {
             font-size: 1.8em;
             font-weight: bold;
@@ -104,27 +162,28 @@
     </style>
 </head>
 <body>
-    <nav>
-        <div class="logo">Fleurs</div>
-        <div class="links">
-            <a href="${pageContext.request.contextPath}/views/index.jsp">Accueil</a>
-            <a href="${pageContext.request.contextPath}/produits">Boutique</a>
-            <a href="${pageContext.request.contextPath}/categories">Categories</a>
-            <a href="${pageContext.request.contextPath}/contact">Contact</a>
-            <div class="icons">
-                <a href="${pageContext.request.contextPath}/panier">
-                    <img src="${pageContext.request.contextPath}/images/panier.png" alt="Panier">
-                </a>
-                <a href="${pageContext.request.contextPath}/utilisateur?action=connexion">
-                    <img src="${pageContext.request.contextPath}/images/profile.png" alt="Connexion">
-                </a>
-                <a href="${pageContext.request.contextPath}/admin">
-                    <img src="${pageContext.request.contextPath}/images/admin.png" alt="Admin">
-                </a>
-                <a href="<c:url value='/utilisateur?action=deconnexion' />" class="btn-deconnexion">Deconnexion</a>
-            </div>
+       <nav>
+    <div class="logo">Flora</div>
+    <div class="links">
+        <a href="${pageContext.request.contextPath}/views/index.jsp">Accueil</a>
+        <a href="${pageContext.request.contextPath}/produits">Boutique</a>
+        <a href="${pageContext.request.contextPath}/categories">Categories</a>
+        <a href="${pageContext.request.contextPath}/contact">Contact</a>
+        <div class="icons">
+            <a href="${pageContext.request.contextPath}/panier">
+                <img src="${pageContext.request.contextPath}/images/panier.png" alt="Panier">
+            </a>
+            <a href="${pageContext.request.contextPath}/utilisateur?action=connexion">
+                <img src="${pageContext.request.contextPath}/images/profile.png" alt="Connexion">
+            </a>
+            <a href="${pageContext.request.contextPath}/admin">
+                <img src="${pageContext.request.contextPath}/images/admin.png" alt="Admin">
+            </a>
+            <a href="<c:url value='/utilisateur?action=deconnexion' />" class="btn-deconnexion">Deconnexion</a>
         </div>
-    </nav>
+    </div>
+</nav>
+
     <div class="container">
         <%
             Map<model.Produit, Integer> produitsPanier = (Map<model.Produit, Integer>) request.getAttribute("produitsPanier");

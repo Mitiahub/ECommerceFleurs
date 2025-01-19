@@ -54,22 +54,27 @@
 <body>
     <h1>Bienvenue dans l'espace administration</h1>
     <nav>
-        <a href="admin?action=produits">
-            <img src="${pageContext.request.contextPath}/images/box.png" alt="Gerer les Produits">
-            Gerer les Produits
-        </a>
-        <a href="admin?action=utilisateurs">
-            <img src="${pageContext.request.contextPath}/images/user.png" alt="Suivre les Utilisateurs">
-            Suivre les Utilisateurs
-        </a>
-        <a href="<c:url value='/admin?action=commandes' />">
-            <img src="${pageContext.request.contextPath}/images/checklist.png" alt="Gerer les Commandes">
-            Gerer les Commandes
-        </a>
-        <a href="utilisateur?action=deconnexion">
-            <img src="${pageContext.request.contextPath}/images/deconnexion.png" alt="Deconnexion">
-            Deconnexion
-        </a>
-    </nav>
+    <a href="admin?action=produits">
+        <img src="${pageContext.request.contextPath}/images/box.png" alt="Gerer les Produits">
+        Gerer les Produits
+    </a>
+    <a href="admin?action=utilisateurs">
+        <img src="${pageContext.request.contextPath}/images/user.png" alt="Suivre les Utilisateurs">
+        Suivre les Utilisateurs
+    </a>
+    <a href="<c:url value='/admin?action=commandes' />">
+        <img src="${pageContext.request.contextPath}/images/checklist.png" alt="Gerer les Commandes">
+        Gerer les Commandes
+    </a>
+    <a href="<c:url value='/admin?action=gestionPromotions' />">
+        <img src="${pageContext.request.contextPath}/images/promotion.png" alt="Gerer les Promotions">
+        Gerer les Promotions
+    </a>
+    <a href="utilisateur?action=deconnexion">
+        <img src="${pageContext.request.contextPath}/images/deconnexion.png" alt="Deconnexion">
+        Deconnexion
+    </a>
+</nav>
+
 </body>
 </html>

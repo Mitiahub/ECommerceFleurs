@@ -109,7 +109,7 @@
                     <tr>
                         <td>${produit.nom}</td>
                         <td>${produit.description}</td>
-                        <td>${produit.prix} €</td>
+                        <td>${produit.prix} Euro</td>
                         <td>${produit.idCategorie}</td>
                         <td>${produit.stock}</td>
                         <td>

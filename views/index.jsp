@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Bienvenue - ECommerceFleurs</title>
+    <title>Bienvenue - Flora</title>
     <meta charset="UTF-8">
     <style>
         /* Global styles */
@@ -57,29 +57,33 @@
             height: 30px;
             border-radius: 50%;
             border: 2px solid white;
-            transition: border-color 0.3s;
+            transition: border-color 0.3s, transform 0.3s;
             cursor: pointer;
         }
         nav .icons img:hover {
             border-color: #d4d4d4;
+            transform: rotate(360deg);
         }
 
         /* Hero section */
         .hero {
-        background-image: url('${pageContext.request.contextPath}/images/hero-banner.jpg');
-        background-size: cover;
-        background-position: center;
-        color: white;
-        text-align: center;
-        padding: 100px 20px;
-    }
+            background-image: url('${pageContext.request.contextPath}/images/hero-banner.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
         .hero h1 {
             font-size: 3em;
             margin: 0;
+            animation: slideDown 1.5s ease-out;
         }
         .hero p {
             font-size: 1.5em;
             margin: 10px 0 20px 0;
+            animation: fadeIn 1.5s ease-in-out;
         }
         .hero a {
             display: inline-block;
@@ -89,10 +93,12 @@
             color: white;
             background-color: #64B5F6;
             border-radius: 5px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
+            animation: zoomIn 1.5s ease-out;
         }
         .hero a:hover {
             background-color: #42A5F5;
+            transform: scale(1.1);
         }
 
         /* Content */
@@ -104,6 +110,7 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             text-align: center;
+            animation: fadeIn 2s ease-in-out;
         }
         .container h2 {
             font-size: 2em;
@@ -118,10 +125,11 @@
             background-color: #228b22;
             border-radius: 5px;
             margin: 10px;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.3s;
         }
         .action-buttons a:hover {
             background-color: #1a6f1a;
+            transform: scale(1.1);
         }
 
         /* Footer */
@@ -135,51 +143,78 @@
             width: 100%;
         }
         .btn-deconnexion {
-        color: white;
-        background-color: #e63946;
-        padding: 5px 10px;
-        border-radius: 5px;
-        text-transform: uppercase;
-        text-decoration: none;
-        font-size: 0.9em;
-        font-weight: bold;
-        transition: background-color 0.3s;
-    }
+            color: white;
+            background-color: #e63946;
+            padding: 5px 10px;
+            border-radius: 5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-size: 0.9em;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .btn-deconnexion:hover {
+            background-color: #d62828;
+            transform: translateY(-3px);
+        }
 
-    .btn-deconnexion:hover {
-        background-color: #d62828;
-    }
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
     </style>
 </head>
 <body>
     <!-- Navbar -->
-           <!-- Navbar -->
-<nav>
-    <div class="logo">Flora</div>
-    <div class="links">
-       <a href="${pageContext.request.contextPath}/views/index.jsp">Accueil</a>
-        <a href="${pageContext.request.contextPath}/produits">Boutique</a>
-        <a href="${pageContext.request.contextPath}/categories">Categories</a>
-        <a href="${pageContext.request.contextPath}/contact">Contact</a>
-        <!-- Icons -->
-        <div class="icons">
-            <a href="${pageContext.request.contextPath}/panier">
-                <img src="${pageContext.request.contextPath}/images/panier.png" alt="Panier">
-            </a>
-            <a href="${pageContext.request.contextPath}/utilisateur?action=connexion">
-                <img src="${pageContext.request.contextPath}/images/profile.png" alt="Connexion">
-            </a>
-            <a href="${pageContext.request.contextPath}/admin">
-                <img src="${pageContext.request.contextPath}/images/admin.png" alt="Admin">
-            </a>
-            <a href="<c:url value='/utilisateur?action=deconnexion' />" class="btn-deconnexion">
-                Deconnexion
-            </a>
-
+    <nav>
+        <div class="logo">Flora</div>
+        <div class="links">
+            <a href="${pageContext.request.contextPath}/views/index.jsp">Accueil</a>
+            <a href="${pageContext.request.contextPath}/produits">Boutique</a>
+            <a href="${pageContext.request.contextPath}/categories">Categories</a>
+            <a href="${pageContext.request.contextPath}/promotions">Promotions</a> <!-- Lien vers la page Promotions -->
+            <a href="${pageContext.request.contextPath}/contact">Contact</a>
+            <div class="icons">
+                <a href="${pageContext.request.contextPath}/panier">
+                    <img src="${pageContext.request.contextPath}/images/panier.png" alt="Panier">
+                </a>
+                <a href="${pageContext.request.contextPath}/utilisateur?action=connexion">
+                    <img src="${pageContext.request.contextPath}/images/profile.png" alt="Connexion">
+                </a>
+                <a href="${pageContext.request.contextPath}/admin">
+                    <img src="${pageContext.request.contextPath}/images/admin.png" alt="Admin">
+                </a>
+                <a href="<c:url value='/utilisateur?action=deconnexion' />" class="btn-deconnexion">Deconnexion</a>
+            </div>
         </div>
-    </div>
-</nav>
-
+    </nav>
 
     <!-- Hero section -->
     <section class="hero">
@@ -190,11 +225,12 @@
 
     <!-- Content -->
     <div class="container">
-        <h2>Pourquoi choisir notre site  ?</h2>
+        <h2>Pourquoi choisir notre site ?</h2>
         <p>Notre boutique vous offre des fleurs fraiches, livrees directement chez vous, avec des compositions uniques adaptees a vos envies.</p>
         <div class="action-buttons">
             <a href="${pageContext.request.contextPath}/produits">Voir les Produits</a>
             <a href="${pageContext.request.contextPath}/panier">Voir votre Panier</a>
+            <a href="${pageContext.request.contextPath}/promotions">Voir les Promotions</a> <!-- Nouveau bouton vers Promotions -->
         </div>
     </div>
 

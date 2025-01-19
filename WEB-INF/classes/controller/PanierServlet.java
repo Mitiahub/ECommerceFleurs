@@ -37,7 +37,17 @@ public class PanierServlet extends HttpServlet {
 
         if ("ajouter".equals(action)) {
             int idProduit = Integer.parseInt(request.getParameter("idProduit"));
-            panier.put(idProduit, panier.getOrDefault(idProduit, 0) + 1);
+            int quantite;
+            try {
+                quantite = Integer.parseInt(request.getParameter("quantite"));
+                if (quantite < 1) {
+                    quantite = 1; // Définit une quantité minimale à 1
+                }
+            } catch (NumberFormatException e) {
+                quantite = 1; // Définit une quantité par défaut à 1 si aucune n'est fournie
+            }
+
+            panier.put(idProduit, panier.getOrDefault(idProduit, 0) + quantite);
         } else if ("supprimer".equals(action)) {
             int idProduit = Integer.parseInt(request.getParameter("idProduit"));
             panier.remove(idProduit);

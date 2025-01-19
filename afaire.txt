@@ -1,0 +1,40 @@
+Temps estimé pour chaque tâche :
+1. Base de Données (15 minutes)
+Ajouter la colonne is_promotion : 5 minutes
+Vérifier les données existantes : 5 minutes
+Tester les modifications avec des exemples : 5 minutes
+2. Modèle (Produit.java) (10 minutes)
+Ajouter le champ isPromotion : 3 minutes (Déjà fait !)
+Vérifier les constructeurs, getters, setters : 5 minutes
+Tester les modifications dans des scénarios de base : 2 minutes
+3. DAO (ProduitDAO.java) (30 minutes)
+Ajouter/modifier les méthodes dans ProduitDAO :
+ajouterProduitEnPromotion : 5 minutes
+retirerProduitDePromotion : 5 minutes
+getProduitsEnPromotion : 10 minutes
+Tester les méthodes DAO avec des requêtes SQL simulées : 10 minutes
+4. Servlet (40 minutes)
+AdminServlet :
+Ajouter les actions ajouterPromotion et retirerPromotion : 15 minutes
+Tester les redirections : 10 minutes
+PromotionsServlet :
+Implémenter la logique pour afficher les promotions : 10 minutes
+Tester avec des exemples concrets : 5 minutes
+5. Vues (JSP) (30 minutes)
+Modifier gestionProduits.jsp :
+Ajouter les boutons "Ajouter en Promotion" et "Retirer de la Promotion" : 15 minutes
+Créer promotions.jsp :
+Afficher la liste des produits en promotion : 15 minutes
+6. Tests (20 minutes)
+Tester tous les cas d'usage (ajout, suppression, affichage) : 20 minutes
+Temps Total Estimé :
+2 heures et 25 minutes.
+Temps Réel Déjà Consommé :
+Analyse et structuration des tâches : 20 minutes
+Modifications de la base de données : 10 minutes
+Modifications du modèle Produit.java : 15 minutes
+Modifications du DAO ProduitDAO.java : 25 minutes
+Temps Restant :
+Gestion des Servlets (AdminServlet et PromotionsServlet) : 30 minutes.
+Modification/Création des pages JSP : 30 minutes.
+Tests : 20 minutes.

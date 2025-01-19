@@ -26,8 +26,8 @@
     </servlet-mapping>
 
     <servlet>
-    <servlet-name>UtilisateurServlet</servlet-name>
-    <servlet-class>controller.UtilisateurServlet</servlet-class>
+        <servlet-name>UtilisateurServlet</servlet-name>
+        <servlet-class>controller.UtilisateurServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>UtilisateurServlet</servlet-name>
@@ -35,8 +35,8 @@
     </servlet-mapping>
 
     <servlet>
-    <servlet-name>AdminServlet</servlet-name>
-    <servlet-class>controller.AdminServlet</servlet-class>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>controller.AdminServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AdminServlet</servlet-name>
@@ -44,17 +44,17 @@
     </servlet-mapping>
 
     <servlet>
-    <servlet-name>CommandeServlet</servlet-name>
-    <servlet-class>controller.CommandeServlet</servlet-class>
+        <servlet-name>CommandeServlet</servlet-name>
+        <servlet-class>controller.CommandeServlet</servlet-class>
     </servlet>
     <servlet-mapping>
-    <servlet-name>CommandeServlet</servlet-name>
-    <url-pattern>/commande</url-pattern>
+        <servlet-name>CommandeServlet</servlet-name>
+        <url-pattern>/commande</url-pattern>
     </servlet-mapping>
 
     <servlet>
-    <servlet-name>CategoriesServlet</servlet-name>
-    <servlet-class>controller.CategoriesServlet</servlet-class>
+        <servlet-name>CategoriesServlet</servlet-name>
+        <servlet-class>controller.CategoriesServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CategoriesServlet</servlet-name>
@@ -71,15 +71,23 @@
     </servlet-mapping>
 
     <servlet>
-    <servlet-name>ProduitDetailServlet</servlet-name>
-    <servlet-class>controller.ProduitDetailServlet</servlet-class>
+        <servlet-name>ProduitDetailServlet</servlet-name>
+        <servlet-class>controller.ProduitDetailServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>ProduitDetailServlet</servlet-name>
         <url-pattern>/produit</url-pattern>
     </servlet-mapping>
 
-
+    <!-- Déclaration du servlet Promotions -->
+    <servlet>
+        <servlet-name>PromotionsServlet</servlet-name>
+        <servlet-class>controller.PromotionsServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PromotionsServlet</servlet-name>
+        <url-pattern>/promotions</url-pattern>
+    </servlet-mapping>
 
     <multipart-config>
         <location>/tmp</location>

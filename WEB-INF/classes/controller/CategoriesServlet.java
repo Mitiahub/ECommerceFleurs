@@ -58,3 +58,4 @@ public class CategoriesServlet extends HttpServlet {
         request.getRequestDispatcher("views/categories.jsp").forward(request, response);
     }
 }
+
