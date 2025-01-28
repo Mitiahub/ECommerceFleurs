@@ -1,5 +1,4 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,27 +38,14 @@
             background-color: #228b22;
             color: white;
         }
-        .statut {
-            font-weight: bold;
-            padding: 5px;
-            border-radius: 5px;
-        }
-        .statut.en-cours {
-            color: #228b22;
-        }
-        .statut.livre {
-            color: #007bff;
-        }
-        .statut.annule {
-            color: #dc3545;
-        }
         button {
             background-color: #228b22;
             color: white;
             border: none;
+            padding: 5px 10px;
             border-radius: 5px;
             cursor: pointer;
-            padding: 5px 10px;
+            margin: 2px;
         }
         button:hover {
             background-color: #1a6f1a;
@@ -81,8 +67,8 @@
                     <thead>
                         <tr>
                             <th>ID Commande</th>
-                            <th>Utilisateur</th>
                             <th>Date</th>
+                            <th>Utilisateur</th>
                             <th>Statut</th>
                             <th>Actions</th>
                         </tr>
@@ -91,23 +77,16 @@
                         <c:forEach var="commande" items="${commandes}">
                             <tr>
                                 <td>${commande.idCommande}</td>
-                                <td>${commande.utilisateurNom}</td>
                                 <td>${commande.date}</td>
+                                <td>${commande.utilisateurNom}</td>
+                                <td>${commande.statut}</td>
                                 <td>
-                                    <span class="statut ${commande.statut == 'en cours' ? 'en-cours' : (commande.statut == 'livré' ? 'livre' : 'annule')}">
-                                        ${commande.statut}
-                                    </span>
-                                </td>
-                                <td>
-                                    <form action="<c:url value='/admin' />" method="post">
-                                        <input type="hidden" name="action" value="updateCommande">
+                                    <form action="admin" method="post">
+                                        <input type="hidden" name="action" value="changerStatutCommande">
                                         <input type="hidden" name="idCommande" value="${commande.idCommande}">
-                                        <select name="statut">
-                                            <option value="en cours" ${commande.statut == 'en cours' ? 'selected' : ''}>En cours</option>
-                                            <option value="livré" ${commande.statut == 'livré' ? 'selected' : ''}>Livre</option>
-                                            <option value="annulé" ${commande.statut == 'annulé' ? 'selected' : ''}>Annulé</option>
-                                        </select>
-                                        <button type="submit">Modifier</button>
+                                        <button type="submit" name="statut" value="en cours">En cours</button>
+                                        <button type="submit" name="statut" value="livré">Livré</button>
+                                        <button type="submit" name="statut" value="annulé">Annulé</button>
                                     </form>
                                 </td>
                             </tr>

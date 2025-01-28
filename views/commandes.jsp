@@ -49,6 +49,20 @@
             margin-left: 10px;
             cursor: pointer;
         }
+                .btn-payer {
+            background-color: #228b22;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .btn-payer:hover {
+            background-color: #1a6f1a;
+        }
+
         .btn-deconnexion {
             color: white;
             text-decoration: none;
@@ -180,9 +194,9 @@
                     <tr>
                         <td><img src="<%= produit.getImage() %>" alt="<%= produit.getNom() %>"></td>
                         <td><%= produit.getNom() %></td>
-                        <td><%= produit.getPrix() %> €</td>
+                        <td><%= produit.getPrix() %>Ar</td>
                         <td><%= quantite %></td>
-                        <td><%= totalProduit %> €</td>
+                        <td><%= totalProduit %>Ar</td>
                     </tr>
                     <% } %>
                     <tr>
@@ -191,6 +205,12 @@
                     </tr>
                 </tbody>
             </table>
+            <form action="${pageContext.request.contextPath}/commande" method="post">
+            <input type="hidden" name="action" value="payerCommande">
+            <input type="hidden" name="idCommande" value="<%= commande.getIdCommande() %>">
+            <button type="submit" class="btn-payer">Payer</button>
+        </form>
+
         </div>
         <% 
                 }

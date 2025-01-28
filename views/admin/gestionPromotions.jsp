@@ -1,4 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<fmt:setLocale value="fr_FR"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -92,23 +94,29 @@
                 </tr>
             </thead>
             <tbody>
-                    <c:forEach var="promotion" items="${produitsPromotion}">
-            <tr>
-                <td>${promotion.nom}</td>
-                <td>${promotion.description}</td>
-                <td>${promotion.prix} Euro</td>
-                <td>${promotion.reduction} %</td>
-                <td>${promotion.dateDebut}</td>
-                <td>${promotion.dateFin}</td>
-                <td>
-                    <form action="admin" method="post">
-                        <input type="hidden" name="action" value="retirerPromotion">
-                        <input type="hidden" name="idProduit" value="${promotion.idProduit}">
-                        <button type="submit">Retirer</button>
-                    </form>
-                </td>
-            </tr>
-        </c:forEach>
+                            <c:forEach var="promotion" items="${produitsPromotion}">
+                <tr>
+                    <td>${promotion.nom}</td>
+                    <td>${promotion.description}</td>
+                    <td>
+                        <!-- Prix Original barré -->
+                        <s>${promotion.prix}Ar</s>
+                        <br>
+                        <!-- Prix Réduit -->
+                        ${promotion.prix - (promotion.prix * (promotion.reduction / 100))} Euro
+                    </td>
+                    <td>${promotion.reduction} %</td>
+                    <td>${promotion.dateDebut}</td>
+                    <td>${promotion.dateFin}</td>
+                    <td>
+                        <form action="admin" method="post">
+                            <input type="hidden" name="action" value="retirerPromotion">
+                            <input type="hidden" name="idProduit" value="${promotion.idProduit}">
+                            <button type="submit">Retirer</button>
+                        </form>
+                    </td>
+                </tr>
+            </c:forEach>
 
             </tbody>
         </table>

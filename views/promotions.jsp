@@ -208,20 +208,25 @@
     <div class="container">
         <h1>Produits en Promotion</h1>
         <div class="product-grid">
-            <c:forEach var="produit" items="${promotions}">
-                <div class="product-card">
-                    <img src="${produit.image}" alt="${produit.nom}">
-                    <h2>${produit.nom}</h2>
-                    <p class="price">${produit.prix} €</p>
-                    <p class="reduction">Réduction : ${produit.reduction} %</p>
-                    <form action="panier" method="post">
-                        <input type="hidden" name="action" value="ajouter">
-                        <input type="hidden" name="idProduit" value="${produit.idProduit}">
-                        <button type="submit">Ajouter au Panier</button>
-                    </form>
+    <c:forEach var="produit" items="${promotions}">
+        <div class="product-card">
+            <img src="${produit.image}" alt="${produit.nom}">
+            <h2>${produit.nom}</h2>
+            <p class="price">
+                <s>${produit.prix} Ar</s> <!-- Prix original barré -->
+                <br>
+                ${produit.prix - (produit.prix * produit.reduction / 100)} € <!-- Prix réduit -->
+            </p>
+            <p class="reduction">Réduction : ${produit.reduction} %</p>
+            <form action="panier" method="post">
+                <input type="hidden" name="action" value="ajouter">
+                <input type="hidden" name="idProduit" value="${produit.idProduit}">
+                <button type="submit">Ajouter au Panier</button>
+            </form>
                 </div>
             </c:forEach>
         </div>
+
         <c:if test="${empty promotions}">
             <p>Aucun produit en promotion pour le moment.</p>
         </c:if>

@@ -6,8 +6,9 @@ public class Commande {
     private int idCommande;
     private Timestamp date;
     private String statut;
-    private int idUtilisateur; // Pour refléter la base de données
+    private int idUtilisateur;
     private String utilisateurNom;
+    private boolean paiement;
 
     // Constructeurs
     public Commande() {}
@@ -18,6 +19,15 @@ public class Commande {
         this.statut = statut;
         this.idUtilisateur = idUtilisateur;
         this.utilisateurNom = utilisateurNom;
+    }
+
+    public Commande(int idCommande, Timestamp date, String statut, int idUtilisateur, String utilisateurNom, boolean paiement) {
+        this.idCommande = idCommande;
+        this.date = date;
+        this.statut = statut;
+        this.idUtilisateur = idUtilisateur;
+        this.utilisateurNom = utilisateurNom;
+        this.paiement = paiement;
     }
 
     // Getters et setters
@@ -59,5 +69,13 @@ public class Commande {
 
     public void setUtilisateurNom(String utilisateurNom) {
         this.utilisateurNom = utilisateurNom;
+    }
+
+    public boolean isPaiement() {
+        return paiement;
+    }
+
+    public void setPaiement(boolean paiement) {
+        this.paiement = paiement;
     }
 }

@@ -24,6 +24,14 @@ public class Produit {
         this.image = image;
         this.isPromotion = isPromotion;
     }
+    public Produit(int idProduit, String nom, String description, double prix, String image) {
+    this.idProduit = idProduit;
+    this.nom = nom;
+    this.description = description;
+    this.prix = prix;
+    this.image = image;
+}
+
 
     // Constructeur sans idProduit (utilisé pour ajouter un produit sans promotion par défaut)
     public Produit(String nom, String description, double prix, int idCategorie, int stock, String image) {
@@ -35,6 +43,7 @@ public class Produit {
         this.image = image;
         this.isPromotion = false; // Par défaut, le produit n'est pas en promotion
     }
+
 
     // Getters et Setters
     public int getIdProduit() {

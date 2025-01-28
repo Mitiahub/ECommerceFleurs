@@ -114,16 +114,59 @@ public class UtilisateurDAO {
         return false;
     }
 
-    // Méthode pour supprimer un utilisateur
-    public void supprimerUtilisateur(int idUtilisateur) {
-    String query = "DELETE FROM Utilisateur WHERE id_utilisateur = ?";
-    try (Connection conn = DBConnection.getConnection();
-         PreparedStatement ps = conn.prepareStatement(query)) {
-        ps.setInt(1, idUtilisateur);
-        ps.executeUpdate();
-    } catch (SQLException e) {
-        e.printStackTrace();
+        // Méthode pour supprimer un utilisateur
+        public void supprimerUtilisateur(int idUtilisateur) {
+        String query = "DELETE FROM Utilisateur WHERE id_utilisateur = ?";
+        try (Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(query)) {
+            ps.setInt(1, idUtilisateur);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
-}
+
+    // Méthode pour récupérer une liste d'utilisateurs par leurs IDs
+    public List<Utilisateur> getUtilisateursParIds(List<Integer> ids) {
+        if (ids == null || ids.isEmpty()) {
+            return new ArrayList<>();
+        }
+
+        // Construire la requête SQL dynamique
+        StringBuilder query = new StringBuilder("SELECT * FROM Utilisateur WHERE id_utilisateur IN (");
+        for (int i = 0; i < ids.size(); i++) {
+            query.append("?");
+            if (i < ids.size() - 1) {
+                query.append(", ");
+            }
+        }
+        query.append(")");
+
+        List<Utilisateur> utilisateurs = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(query.toString())) {
+            // Ajouter les IDs dans la requête
+            for (int i = 0; i < ids.size(); i++) {
+                ps.setInt(i + 1, ids.get(i));
+            }
+
+            // Exécuter la requête et récupérer les résultats
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Utilisateur utilisateur = new Utilisateur(
+                    rs.getInt("id_utilisateur"),
+                    rs.getString("nom"),
+                    rs.getString("email"),
+                    rs.getString("mot_de_passe"),
+                    rs.getString("role")
+                );
+                utilisateurs.add(utilisateur);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return utilisateurs;
+    }
+
 
 }

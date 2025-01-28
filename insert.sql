@@ -7,6 +7,8 @@ INSERT INTO Categories (nom) VALUES
 ('Anniversaire'),
 ('Mariage'),
 ('Sympathie et Condoleances');
+INSERT INTO Categories (nom) VALUES ('Sensible à la Lumière');
+
 
 -- Ajout des produits
 INSERT INTO Produit (nom, description, prix, id_categorie, stock, image) VALUES
@@ -71,3 +73,7 @@ SELECT * FROM Produit WHERE is_promotion = TRUE;
 
 -- Vérifier les produits sans promotion
 SELECT * FROM Produit WHERE is_promotion = FALSE;
+
+-------------------------------
+INSERT INTO Ventes (id_utilisateur, id_produit, quantite, montant)
+VALUES (1, 101, 3, 60000), (1, 102, 5, 140000), (2, 103, 2, 50000);

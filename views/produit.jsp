@@ -163,7 +163,7 @@
                 <div class="product-info">
                     <img src="${produit.image}" alt="${produit.nom}">
                     <h1>${produit.nom}</h1>
-                    <p class="price">${produit.prix} Euro</p>
+                    <p class="price">${produit.prix}Ar</p>
                     <p>${produit.description}</p>
                 </div>
                 <div class="actions">

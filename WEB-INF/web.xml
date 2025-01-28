@@ -77,7 +77,32 @@
     <servlet-mapping>
         <servlet-name>ProduitDetailServlet</servlet-name>
         <url-pattern>/produit</url-pattern>
+
+            <servlet>
+        <servlet-name>PaiementServlet</servlet-name>
+        <servlet-class>controller.PaiementServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PaiementServlet</servlet-name>
+        <url-pattern>/paiement</url-pattern>
     </servlet-mapping>
+
+        <servlet>
+        <servlet-name>VenteServlet</servlet-name>
+        <servlet-class>controller.VenteServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>VenteServlet</servlet-name>
+        <url-pattern>/ventes</url-pattern>
+    </servlet-mapping>
+
+
+    </servlet-mapping>
+
+            <session-config>
+            <session-timeout>10</session-timeout> <!-- 30 minutes -->
+        </session-config>
+
 
     <!-- Déclaration du servlet Promotions -->
     <servlet>

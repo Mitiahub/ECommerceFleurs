@@ -1,0 +1,31 @@
+<thead>
+    <tr>
+        <th>ID Vente</th>
+        <th>ID Utilisateur</th>
+        <th>ID Produit</th>
+        <th>Quantité</th>
+        <th>Montant (Avant Remise)</th>
+        <th>Remise</th>
+        <th>Montant (Final)</th>
+        <th>Date de Vente</th>
+    </tr>
+</thead>
+<tbody>
+    <c:forEach var="vente" items="${ventes}">
+        <tr>
+            <td>${vente.idVente}</td>
+            <td>${vente.idUtilisateur}</td>
+            <td>${vente.idProduit}</td>
+            <td>${vente.quantite}</td>
+            <td>${vente.montantAvantRemise} Ar</td>
+            <td>${vente.remise} Ar</td>
+            <td>${vente.montant} Ar</td>
+            <td>${vente.dateVente}</td>
+        </tr>
+    </c:forEach>
+    <c:if test="${empty ventes}">
+        <tr>
+            <td colspan="8" class="no-data">Aucune vente trouvée pour cette période.</td>
+        </tr>
+    </c:if>
+</tbody>

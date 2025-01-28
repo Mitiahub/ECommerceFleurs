@@ -216,7 +216,7 @@
                 <tr>
                     <td><img src="<%= produit.getImage() %>" alt="<%= produit.getNom() %>"></td>
                     <td><%= produit.getNom() %></td>
-                    <td><%= produit.getPrix() %> €</td>
+                    <td><%= produit.getPrix() %> Ar</td>
                     <td><%= quantite %></td>
                     <td><%= totalProduit %> €</td>
                     <td>

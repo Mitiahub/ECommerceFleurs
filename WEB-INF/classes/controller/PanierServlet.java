@@ -14,6 +14,7 @@ public class PanierServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
+        session.setMaxInactiveInterval(30 * 60); // Durée de vie de la session (30 minutes)
         Map<Integer, Integer> panier = getPanierFromSession(session);
 
         ProduitDAO produitDAO = new ProduitDAO();
@@ -48,10 +49,16 @@ public class PanierServlet extends HttpServlet {
             }
 
             panier.put(idProduit, panier.getOrDefault(idProduit, 0) + quantite);
+            session.setAttribute("panier", panier); // Mettez à jour la session
         } else if ("supprimer".equals(action)) {
             int idProduit = Integer.parseInt(request.getParameter("idProduit"));
             panier.remove(idProduit);
+            session.setAttribute("panier", panier); // Mettez à jour la session
         }
+
+        // Logs pour débogage
+        System.out.println("Action : " + action);
+        System.out.println("Contenu du panier : " + panier);
 
         response.sendRedirect("panier");
     }
@@ -62,19 +69,20 @@ public class PanierServlet extends HttpServlet {
      * @param session HttpSession de l'utilisateur.
      * @return Map représentant le panier (idProduit -> quantite).
      */
-    @SuppressWarnings("unchecked")
-    private Map<Integer, Integer> getPanierFromSession(HttpSession session) {
-        Object panierObj = session.getAttribute("panier");
-        if (panierObj instanceof Map) {
-            try {
-                return (Map<Integer, Integer>) panierObj;
-            } catch (ClassCastException e) {
-                e.printStackTrace();
+            @SuppressWarnings("unchecked")
+        private Map<Integer, Integer> getPanierFromSession(HttpSession session) {
+            Object panierObj = session.getAttribute("panier");
+            if (panierObj instanceof Map) {
+                try {
+                    return (Map<Integer, Integer>) panierObj;
+                } catch (ClassCastException e) {
+                    e.printStackTrace();
+                }
             }
+            // Retourne un nouveau panier si aucun n'existe ou si un problème s'est produit
+            Map<Integer, Integer> newPanier = new HashMap<>();
+            session.setAttribute("panier", newPanier); // Important : met à jour la session avec le nouveau panier
+            return newPanier;
         }
-        // Retourne un nouveau panier si aucun n'existe ou si un problème s'est produit
-        Map<Integer, Integer> newPanier = new HashMap<>();
-        session.setAttribute("panier", newPanier);
-        return newPanier;
-    }
+
 }

@@ -247,7 +247,7 @@
             <div class="product-card">
                 <img src="<%= produit.getImage() %>" alt="<%= produit.getNom() %>">
                 <h2><%= produit.getNom() %></h2>
-                <p class="price"><%= produit.getPrix() %> Euro</p>
+                <p class="price"><%= produit.getPrix() %>Ar</p>
                 <p><%= produit.getDescription() %></p>
                 <form action="panier" method="post">
                     <input type="hidden" name="action" value="ajouter">

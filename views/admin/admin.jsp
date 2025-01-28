@@ -70,6 +70,10 @@
         <img src="${pageContext.request.contextPath}/images/promotion.png" alt="Gerer les Promotions">
         Gerer les Promotions
     </a>
+    <a href="<c:url value='/admin?action=ventes' />">
+        <img src="${pageContext.request.contextPath}/images/sale.png" alt="Afficher les Ventes">
+        Afficher les Ventes
+    </a>
     <a href="utilisateur?action=deconnexion">
         <img src="${pageContext.request.contextPath}/images/deconnexion.png" alt="Deconnexion">
         Deconnexion

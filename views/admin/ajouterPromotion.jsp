@@ -86,25 +86,25 @@
                     <tr>
                         <td>${produit.nom}</td>
                         <td>${produit.description}</td>
-                        <td>${produit.prix} €</td>
+                        <td>${produit.prix} Ar</td>
                         <td>
-                            <form action="admin" method="post">
-                                <input type="hidden" name="action" value="ajouterPromotion">
-                                <input type="hidden" name="idProduit" value="${produit.idProduit}">
-                                <div class="form-group">
-                                    <label for="reduction_${produit.idProduit}">Réduction :</label>
-                                    <input type="number" id="reduction_${produit.idProduit}" name="reduction" min="1" max="100" step="0.01" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="dateDebut_${produit.idProduit}">Date Début :</label>
-                                    <input type="date" id="dateDebut_${produit.idProduit}" name="dateDebut" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="dateFin_${produit.idProduit}">Date Fin :</label>
-                                    <input type="date" id="dateFin_${produit.idProduit}" name="dateFin" required>
-                                </div>
-                                <button type="submit">Ajouter</button>
-                            </form>
+                            <form action="${pageContext.request.contextPath}/admin" method="post">
+                                    <input type="hidden" name="action" value="ajouterPromotion">
+                                    <input type="hidden" name="idProduit" value="${produit.idProduit}">
+                                    <div class="form-group">
+                                        <label for="reduction_${produit.idProduit}">Réduction :</label>
+                                        <input type="number" id="reduction_${produit.idProduit}" name="reduction" min="1" max="100" step="0.01" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dateDebut_${produit.idProduit}">Date Début :</label>
+                                        <input type="date" id="dateDebut_${produit.idProduit}" name="dateDebut" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dateFin_${produit.idProduit}">Date Fin :</label>
+                                        <input type="date" id="dateFin_${produit.idProduit}" name="dateFin" required>
+                                    </div>
+                                    <button type="submit">Ajouter</button>
+                                </form>
                         </td>
                     </tr>
                 </c:forEach>

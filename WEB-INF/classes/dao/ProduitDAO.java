@@ -219,31 +219,35 @@ public class ProduitDAO {
             return plantesVertes;
         }
 
-// Obtenir les plantes sensibles à la lumière
-        public List<Produit> getPlantesSensiblesALumiere() {
-            String query = "SELECT * FROM Produit WHERE description LIKE '%sensible lumière%'";
-            List<Produit> plantesSensibles = new ArrayList<>();
-            try (Connection conn = DBConnection.getConnection();
-                PreparedStatement ps = conn.prepareStatement(query);
-                ResultSet rs = ps.executeQuery()) {
+            public List<Produit> getPlantesSensiblesALumiere() {
+        // Requête pour récupérer les produits associés à la catégorie "Sensible à la Lumière"
+        String query = "SELECT p.* FROM Produit p " +
+                    "JOIN Produit_Categories pc ON p.id_produit = pc.id_produit " +
+                    "WHERE pc.id_categorie = ?";
+        List<Produit> plantesSensibles = new ArrayList<>();
+        try (Connection conn = DBConnection.getConnection();
+            PreparedStatement ps = conn.prepareStatement(query)) {
+            // ID de la catégorie "Sensible à la Lumière" (par exemple, 8)
+            ps.setInt(1, 8);
+            try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     plantesSensibles.add(new Produit(
-                            rs.getInt("id_produit"),
-                            rs.getString("nom"),
-                            rs.getString("description"),
-                            rs.getDouble("prix"),
-                            rs.getInt("id_categorie"),
-                            rs.getInt("stock"),
-                            rs.getString("image"),
-                            rs.getBoolean("is_promotion")
+                        rs.getInt("id_produit"),
+                        rs.getString("nom"),
+                        rs.getString("description"),
+                        rs.getDouble("prix"),
+                        rs.getInt("id_categorie"), // Catégorie principale
+                        rs.getInt("stock"),
+                        rs.getString("image"),
+                        rs.getBoolean("is_plante_verte") // Vérifiez la colonne correcte dans la base
                     ));
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
-            return plantesSensibles;
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-
+        return plantesSensibles;
+    }
 
     // Obtenir les produits en promotion
           public List<Promotion> getProduitsEnPromotion() {
