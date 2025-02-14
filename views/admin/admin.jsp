@@ -74,6 +74,10 @@
         <img src="${pageContext.request.contextPath}/images/sale.png" alt="Afficher les Ventes">
         Afficher les Ventes
     </a>
+    <a href="<c:url value='/admin?action=historiquePrix' />">
+        <img src="${pageContext.request.contextPath}/images/sale.png" alt="Historique des Prix">
+        Historique des Prix
+    </a>
     <a href="utilisateur?action=deconnexion">
         <img src="${pageContext.request.contextPath}/images/deconnexion.png" alt="Deconnexion">
         Deconnexion

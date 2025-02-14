@@ -1,0 +1,68 @@
+### **To-Do List pour l'Implémentation de l'Historique des Prix des Produits**  
+**Temps total estimé : 1h30**
+
+---
+
+### **1. Base de Données (20 minutes)**
+✅ **Créer la table `historique_prix`** (10 minutes)  
+   - Colonnes : `id_historique`, `id_produit`, `ancien_prix`, `nouveau_prix`, `date_modification`.  
+   - Ajouter des contraintes de clé étrangère (`id_produit` lié à `produit.id_produit`).  
+
+✅ **Modifier la table `produit` si nécessaire** (5 minutes)  
+   - Vérifier si une structure additionnelle est requise pour faciliter les mises à jour de prix.  
+
+✅ **Tester la création et insertion de données** (5 minutes)  
+   - Vérifier qu’un changement de prix ajoute bien une entrée dans `historique_prix`.  
+
+---
+
+### **2. Modèle (10 minutes)**
+✅ **Créer la classe `HistoriquePrix.java`** (5 minutes)  
+   - Ajouter les champs : `idProduit`, `ancienPrix`, `nouveauPrix`, `dateModification`.  
+   - Ajouter un constructeur, getters et setters.  
+
+✅ **Modifier `ProduitDAO.java`** (5 minutes)  
+   - Ajouter un champ pour `historiquePrix` (si pertinent).  
+
+---
+
+### **3. DAO (ProduitDAO & HistoriquePrixDAO) (20 minutes)**
+✅ **Créer `HistoriquePrixDAO.java`** (10 minutes)  
+   - **Méthode `getHistoriquePrix(int idProduit)`** → Retourne la liste des changements de prix d’un produit.  
+   - **Méthode `ajouterHistoriquePrix(int idProduit, double ancienPrix, double nouveauPrix)`** → Insère un nouvel enregistrement de changement de prix.  
+
+✅ **Modifier `ProduitDAO.java` pour enregistrer l'historique lors des mises à jour de prix** (10 minutes)  
+   - **Méthode `modifierPrixProduit(int idProduit, double nouveauPrix)`** → Enregistre le prix précédent avant la mise à jour.  
+
+---
+
+### **4. Servlet (AdminServlet) (20 minutes)**
+✅ **Modifier `AdminServlet.java`** (15 minutes)  
+   - Ajouter la gestion de l'affichage de l'historique (`action=historiquePrix`).  
+   - Ajouter la logique pour enregistrer l’historique lors de la modification des prix.  
+
+✅ **Tester les redirections et validations** (5 minutes)  
+
+---
+
+### **5. Vues (JSP) (25 minutes)**
+✅ **Créer `historiquePrix.jsp`** (15 minutes)  
+   - Afficher la liste des changements de prix avec les colonnes : `Ancien Prix`, `Nouveau Prix`, `Date Modification`.  
+
+✅ **Modifier `gestionProduits.jsp`** (10 minutes)  
+   - Ajouter un bouton "Voir Historique" pour chaque produit qui redirige vers `historiquePrix.jsp`.  
+
+---
+
+### **6. Tests et Déploiement (15 minutes)**
+✅ **Tester tous les cas d'usage** (10 minutes)  
+   - Ajout d’un prix dans l’historique après modification.  
+   - Affichage correct de l’historique pour un produit.  
+   - Vérifier que les anciens prix sont bien enregistrés.  
+
+✅ **Correction des erreurs et ajustements finaux** (5 minutes)  
+
+---
+
+### **Temps Total Estimé : 1h30**  
+Si nécessaire, ajustements et optimisation des requêtes SQL ou des vues JSP après tests. 🚀

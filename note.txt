@@ -1,0 +1,84 @@
+### 🌸 **Projet E-commerce de Fleurs - Résumé Complet** 🌸  
+
+#### **🛠️ Technologies utilisées :**  
+- **Backend** : Java Servlets (sans annotations, uniquement via `web.xml`), PostgreSQL (via JDBC), DAO  
+- **Frontend** : JSP, JSTL, CSS (évite les fonds blancs)  
+- **Outils** : Eclipse, PostgreSQL, Render pour hébergement  
+
+---
+
+## **📌 Structure du projet :**  
+### 📁 **Dossier principal :** `CRUD`  
+🔹 `WEB-INF/`  
+- **controller/** → Contient les Servlets  
+- **dao/** → Gestion des accès aux données (JDBC)  
+- **model/** → Classes de modèle  
+- **utils/** → Utilitaires (connexion DB, etc.)  
+- **lib/** → Bibliothèques externes  
+- **web.xml** → Configuration des servlets et mappings  
+
+🔹 `views/` → Contient toutes les pages JSP (frontend)  
+
+---
+
+## **📌 Fonctionnalités développées :**  
+### **1️⃣ Gestion des produits (CRUD)**
+✅ **Ajouter, modifier, supprimer, afficher** des produits  
+✅ **Formulaire de modification** qui redirige correctement vers `admin.jsp` après mise à jour  
+
+🔹 **Problème résolu :**  
+- La redirection après modification renvoyait au formulaire au lieu de `admin.jsp`  
+- **Correction : Ajout de `response.sendRedirect("admin.jsp");` dans la servlet**  
+
+🔹 **Erreur rencontrée :**  
+- `controller\AdminServlet.java:235: error: unmappable character for encoding Cp1252`  
+- **Correction : Changement d'encodage en UTF-8 dans Eclipse + fichiers sources**  
+
+---
+
+### **2️⃣ Gestion du panier**  
+✅ Ajout et suppression de produits  
+✅ Affichage du total et des articles sélectionnés  
+
+---
+
+### **3️⃣ Authentification utilisateur et admin**  
+✅ **Connexion / Déconnexion** via Servlet  
+✅ Différenciation des utilisateurs **(admin vs client)**  
+✅ **Navbar dynamique** selon le rôle  
+
+**🔹 Problème résolu :**  
+- La navbar ne s'affichait pas correctement sur certaines pages  
+- **Correction : Uniformisation de la navbar et des styles CSS dans toutes les pages**  
+
+---
+
+### **4️⃣ Catégories de produits**  
+✅ Affichage dynamique des produits selon la catégorie  
+✅ Lien entre produits et catégories dans la base de données  
+
+---
+
+### **5️⃣ Hébergement & Configuration PostgreSQL**  
+✅ Base de données PostgreSQL  
+✅ Tests avec Postman pour API REST  
+✅ Déploiement sur **Render**  
+
+---
+
+## **📌 Préférences & Contraintes du projet :**  
+🚫 **Aucune annotation en Servlet** (tout est géré via `web.xml`)  
+🚫 **Pas de migrations pour la DB** (tout est manipulé directement en SQL)  
+🚫 **Organisation stricte des fichiers compilés** (compilation manuelle)  
+✅ **Encodage UTF-8 obligatoire** pour éviter les erreurs (`Cp1252`)  
+✅ **Design sans fond blanc** (préférence esthétique)  
+
+---
+
+## **📌 Objectifs restants :**  
+🔜 Implémentation d'un **historique des prix** (sauvegarder l'ancien prix en base avant mise à jour)  
+🔜 Optimisation de la gestion des commandes  
+
+---
+
+Ce résumé te permettra de continuer ton projet sans perdre le fil, même en changeant de compte OpenAI. 🚀

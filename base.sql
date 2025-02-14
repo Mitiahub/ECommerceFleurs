@@ -134,4 +134,13 @@ CREATE TABLE Ventes (
     FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id_utilisateur),
     FOREIGN KEY (id_produit) REFERENCES Produit(id_produit)
 );
+---------
+CREATE TABLE historique_prix (
+    id_historique SERIAL PRIMARY KEY,
+    id_produit INT NOT NULL,
+    ancien_prix NUMERIC(10,2) NOT NULL,
+    nouveau_prix NUMERIC(10,2) NOT NULL,
+    date_modification TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_produit) REFERENCES produit(id_produit)
+);
 

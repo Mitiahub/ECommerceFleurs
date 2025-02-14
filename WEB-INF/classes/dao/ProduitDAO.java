@@ -3,6 +3,8 @@ package dao;
 import model.Produit;
 import utils.DBConnection;
 import model.Promotion;
+import model.HistoriquePrix;
+
 
 
 import java.sql.*;
@@ -29,23 +31,29 @@ public class ProduitDAO {
     }
 
     // Modifier un produit
-    public void modifierProduit(Produit produit) {
-        String query = "UPDATE Produit SET nom = ?, description = ?, prix = ?, id_categorie = ?, stock = ?, image = ?, is_promotion = ? WHERE id_produit = ?";
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement ps = conn.prepareStatement(query)) {
-            ps.setString(1, produit.getNom());
-            ps.setString(2, produit.getDescription());
-            ps.setDouble(3, produit.getPrix());
-            ps.setInt(4, produit.getIdCategorie());
-            ps.setInt(5, produit.getStock());
-            ps.setString(6, produit.getImage());
-            ps.setBoolean(7, produit.isPromotion());
-            ps.setInt(8, produit.getIdProduit());
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public boolean modifierProduit(Produit produit) {
+    String query = "UPDATE produit SET nom = ?, description = ?, prix = ?, id_categorie = ?, stock = ?, image = ? WHERE id_produit = ?";
+    
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(query)) {
+
+        ps.setString(1, produit.getNom());
+        ps.setString(2, produit.getDescription());
+        ps.setDouble(3, produit.getPrix());
+        ps.setInt(4, produit.getIdCategorie());
+        ps.setInt(5, produit.getStock());
+        ps.setString(6, produit.getImage());
+        ps.setInt(7, produit.getIdProduit());
+
+        int rowsUpdated = ps.executeUpdate();
+        return rowsUpdated > 0; // ✅ Retourne vrai si au moins une ligne a été mise à jour
+
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false; //  Retourne faux en cas d'erreur
     }
+}
+
 
     // Supprimer un produit
     public void supprimerProduit(int idProduit) {
@@ -360,5 +368,59 @@ public class ProduitDAO {
             return false; // Retourne false en cas d'erreur
         }
     }
+        public boolean mettreAJourPrixProduit(int idProduit, double nouveauPrix) {
+        String historiqueQuery = "INSERT INTO historique_prix (id_produit, ancien_prix, nouveau_prix) " +
+                                "SELECT id_produit, prix, ? FROM produit WHERE id_produit = ?";
+        String updateQuery = "UPDATE produit SET prix = ? WHERE id_produit = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+            PreparedStatement psHistorique = conn.prepareStatement(historiqueQuery);
+            PreparedStatement psUpdate = conn.prepareStatement(updateQuery)) {
+
+            // Insérer dans historique_prix
+            psHistorique.setDouble(1, nouveauPrix);
+            psHistorique.setInt(2, idProduit);
+            psHistorique.executeUpdate();
+
+            // Mettre à jour le prix du produit
+            psUpdate.setDouble(1, nouveauPrix);
+            psUpdate.setInt(2, idProduit);
+            int rowsUpdated = psUpdate.executeUpdate();
+
+            return rowsUpdated > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+        public List<HistoriquePrix> getHistoriquePrix(int idProduit) {
+    List<HistoriquePrix> historique = new ArrayList<>();
+    String query = "SELECT id_historique, ancien_prix, nouveau_prix, date_modification FROM historique_prix WHERE id_produit = ? ORDER BY date_modification DESC";
+
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement ps = conn.prepareStatement(query)) {
+
+        ps.setInt(1, idProduit);
+        try (ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                historique.add(new HistoriquePrix(
+                    rs.getInt("id_historique"),   // Ajout de l'ID historique
+                    idProduit,                     // ID du produit
+                    rs.getDouble("ancien_prix"),   // Ancien prix
+                    rs.getDouble("nouveau_prix"),  // Nouveau prix
+                    rs.getTimestamp("date_modification") // Date de modification
+                ));
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return historique;
+}
+
+
+
 
 }

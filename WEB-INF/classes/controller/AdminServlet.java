@@ -10,6 +10,8 @@ import model.Commande;
 import model.Promotion;
 import model.CommandeStatut;
 import model.Vente;
+import model.HistoriquePrix;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.http.*;
@@ -77,6 +79,50 @@ public class AdminServlet extends HttpServlet {
             response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la récupération des ventes.");
         }
     }
+    else if ("modifierProduit".equals(action)) {
+    try {
+        int idProduit = Integer.parseInt(request.getParameter("idProduit"));
+        Produit produit = produitDAO.getProduitParId(idProduit);
+        
+        if (produit != null) {
+            request.setAttribute("produit", produit);
+            request.getRequestDispatcher("views/admin/modifierProduit.jsp").forward(request, response);
+        } else {
+            response.sendRedirect("admin?action=produits&message=ProduitNonTrouve");
+        }
+    } catch (NumberFormatException e) {
+        e.printStackTrace();
+        response.sendRedirect("admin?action=produits&message=ErreurID");
+    }
+}
+
+            else if ("historiquePrix".equals(action)) {
+            try {
+                String idProduitStr = request.getParameter("idProduit");
+
+                if (idProduitStr == null || idProduitStr.trim().isEmpty()) {
+                    throw new IllegalArgumentException("ID produit manquant.");
+                }
+
+                int idProduit = Integer.parseInt(idProduitStr);
+
+                List<HistoriquePrix> historiquePrix = produitDAO.getHistoriquePrix(idProduit);
+
+                request.setAttribute("historiquePrix", historiquePrix);
+                request.setAttribute("idProduit", idProduit);  // ✅ Ajout pour éviter erreur JSP
+                request.getRequestDispatcher("views/admin/historiquePrix.jsp").forward(request, response);
+
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID produit invalide : Format incorrect.");
+            } catch (IllegalArgumentException e) {
+                e.printStackTrace();
+                response.sendError(HttpServletResponse.SC_BAD_REQUEST, "ID produit invalide : " + e.getMessage());
+            } catch (Exception e) {
+                e.printStackTrace();
+                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erreur lors de la récupération de l'historique des prix.");
+            }
+        }
 
                 else if ("filtrerVentes".equals(action)) {
                 try {
@@ -136,7 +182,7 @@ public class AdminServlet extends HttpServlet {
         VenteDAO venteDAO = new VenteDAO();
 
         try {
-                    if ("ajouterPromotion".equals(action)) {
+            if ("ajouterPromotion".equals(action)) {
             try {
                 int idProduit = Integer.parseInt(request.getParameter("idProduit"));
                 double reduction = Double.parseDouble(request.getParameter("reduction"));
@@ -169,6 +215,29 @@ public class AdminServlet extends HttpServlet {
                 request.getRequestDispatcher("views/admin/ajouterPromotion.jsp").forward(request, response);
             }
         }
+            else if ("updateProduit".equals(action)) {
+        try {
+            int idProduit = Integer.parseInt(request.getParameter("idProduit"));
+            String nom = request.getParameter("nom");
+            String description = request.getParameter("description");
+            double prix = Double.parseDouble(request.getParameter("prix"));
+            int idCategorie = Integer.parseInt(request.getParameter("idCategorie"));
+            int stock = Integer.parseInt(request.getParameter("stock"));
+            String image = request.getParameter("image");
+
+            Produit produit = new Produit(idProduit, nom, description, prix, idCategorie, stock, image, false);
+            boolean updateSuccess = produitDAO.modifierProduit(produit);
+
+            if (updateSuccess) {
+                // ✅ Si la mise à jour est réussie, redirige vers la liste des produits
+                response.sendRedirect("admin?action=produits&message=ProduitModifie");
+            }       
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            response.sendRedirect("admin?action=modifierProduit&idProduit=" + request.getParameter("idProduit") + "&message=ErreurID");
+        }
+    }
+
 
             if ("ajouterProduit".equals(action)) {
                 String uploadPath = getServletContext().getRealPath("") + File.separator + "images";
@@ -207,19 +276,23 @@ public class AdminServlet extends HttpServlet {
                     e.printStackTrace();
                     response.sendRedirect("admin?action=utilisateursAvecReduction&message=Erreur");
                 }
-            } else if ("modifierProduit".equals(action)) {
-                int idProduit = Integer.parseInt(request.getParameter("idProduit"));
-                String nom = request.getParameter("nom");
-                String description = request.getParameter("description");
-                double prix = Double.parseDouble(request.getParameter("prix"));
-                int idCategorie = Integer.parseInt(request.getParameter("idCategorie"));
-                int stock = Integer.parseInt(request.getParameter("stock"));
-                String image = request.getParameter("image");
-
-                Produit produit = new Produit(idProduit, nom, description, prix, idCategorie, stock, image, false);
-                produitDAO.modifierProduit(produit);
-                response.sendRedirect("admin?action=produits");
-            } else if ("supprimerProduit".equals(action)) {
+            }else if ("modifierProduit".equals(action)) {
+                    try {
+                        int idProduit = Integer.parseInt(request.getParameter("idProduit"));
+                        Produit produit = produitDAO.getProduitParId(idProduit);
+                        
+                        if (produit != null) {
+                            request.setAttribute("produit", produit);
+                            request.getRequestDispatcher("views/admin/modifierProduit.jsp").forward(request, response);
+                        } else {
+                            response.sendRedirect("admin?action=produits&message=ProduitNonTrouve");
+                        }
+                    } catch (NumberFormatException e) {
+                        e.printStackTrace();
+                        response.sendRedirect("admin?action=produits&message=ErreurID");
+                    }
+                }
+                else if ("supprimerProduit".equals(action)) {
                 int idProduit = Integer.parseInt(request.getParameter("idProduit"));
                 produitDAO.supprimerProduit(idProduit);
                 response.sendRedirect("admin?action=produits");

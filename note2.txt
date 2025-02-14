@@ -1,0 +1,143 @@
+# Documentation du Projet E-commerce Fleurs
+
+## 1. **Structure du Projet**
+Le projet est une boutique en ligne pour la vente de fleurs, développée en **Java Servlet, JSP et PostgreSQL** avec **Eclipse**.
+
+### **Arborescence du Projet**
+```
+EcommerceFleurs/
+│── WEB-INF/
+│   ├── controller/  (Contient les servlets)
+│   ├── dao/         (Gestion des accès aux données)
+│   ├── model/       (Modèles des entités)
+│   ├── utils/       (Outils divers)
+│   ├── lib/         (Bibliothèques externes)
+│   ├── web.xml      (Configuration des servlets)
+│── views/           (Pages JSP)
+│── images/          (Stockage des images de produits)
+│── styles/          (CSS pour le design)
+│── scripts/         (JS pour les interactions dynamiques)
+```
+
+---
+
+## 2. **Détail des Fichiers Importants**
+
+### **🔹 Fichiers Backend (Java)**
+
+#### 📌 **AdminServlet.java** (controller)
+- **Rôle :** Gère les actions des administrateurs (ajout, modification, suppression de produits, etc.).
+- **Principales fonctionnalités :**
+  - Récupération de la liste des produits et catégories
+  - Ajout et modification de produits
+  - Suppression d’un produit
+  - Redirection vers les pages JSP appropriées
+- **Problème rencontré :** Après la modification d’un produit, la redirection reste sur le formulaire de modification au lieu de retourner à `admin.jsp`.
+
+#### 📌 **ProduitDAO.java** (dao)
+- **Rôle :** Gère l’accès à la base de données pour les produits.
+- **Méthodes principales :**
+  - `getAllProduits()`: Récupère la liste des produits
+  - `getProduitById(id)`: Récupère un produit spécifique
+  - `ajouterProduit(produit)`: Insère un produit dans la base
+  - `modifierProduit(produit)`: Met à jour un produit
+  - `supprimerProduit(id)`: Supprime un produit
+- **Problème rencontré :** Encodage des caractères (`unmappable character for encoding Cp1252`).
+
+#### 📌 **CategorieDAO.java** (dao)
+- **Rôle :** Gère les catégories de produits.
+- **Méthodes principales :**
+  - `getAllCategories()`: Liste toutes les catégories
+  - `getCategorieById(id)`: Récupère une catégorie spécifique
+  - `ajouterCategorie(categorie)`: Ajoute une nouvelle catégorie
+  - `modifierCategorie(categorie)`: Met à jour une catégorie
+
+#### 📌 **DatabaseConnection.java** (utils)
+- **Rôle :** Gère la connexion à la base de données PostgreSQL.
+- **Utilisation :**
+  - Utilisé par `ProduitDAO`, `CategorieDAO`, etc.
+  - Fournit une connexion unique à PostgreSQL.
+- **Amélioration possible :** Gestion avancée des exceptions.
+
+---
+
+### **🔹 Fichiers Frontend (JSP, CSS, JS)**
+
+#### 📌 **produits.jsp** (views)
+- **Rôle :** Affiche la liste des produits de la boutique.
+- **Technologies utilisées :** JSTL pour l'affichage dynamique des produits.
+- **Contenu :**
+  - Boucle `<c:forEach>` pour afficher les produits récupérés de la base.
+  - Affichage du nom, prix et image du produit.
+  - Lien pour ajouter au panier.
+
+#### 📌 **modifierProduit.jsp** (views)
+- **Rôle :** Formulaire pour modifier un produit existant.
+- **Problème rencontré :** Après soumission du formulaire, reste sur la page au lieu de rediriger vers `admin.jsp`.
+- **Solution possible :** Vérifier le `response.sendRedirect("admin.jsp")` après mise à jour du produit.
+
+#### 📌 **admin.jsp** (views)
+- **Rôle :** Interface de gestion des produits et catégories pour les administrateurs.
+- **Contenu :**
+  - Liste des produits avec boutons Modifier/Supprimer.
+  - Formulaire pour ajouter de nouveaux produits.
+  - Lien vers la gestion des catégories.
+
+#### 📌 **navbar.jsp** (views)
+- **Rôle :** Barre de navigation commune aux pages.
+- **Technologies :** HTML, JSTL (`<c:url>` pour gérer les liens dynamiquement).
+
+---
+
+## 3. **Problèmes rencontrés et Solutions**
+
+### **🔸 1. Encodage des caractères (Cp1252)**
+**Problème :** Certains fichiers contiennent des caractères non reconnus (`unmappable character for encoding Cp1252`).
+**Solution :**
+- Convertir tous les fichiers en UTF-8 dans Eclipse : `File` > `Properties` > `Text File Encoding` > `UTF-8`.
+- Vérifier que PostgreSQL utilise UTF-8.
+
+### **🔸 2. Redirection après modification d’un produit**
+**Problème :** Après modification d’un produit, on reste sur `modifierProduit.jsp`.
+**Solution :**
+- Vérifier que la servlet `AdminServlet` utilise bien `response.sendRedirect("admin.jsp")` après mise à jour.
+- Tester si `modifierProduit()` retourne `true` dans `ProduitDAO`.
+
+---
+
+## 4. **Base de Données (PostgreSQL)**
+### **Tables principales :**
+
+#### 📌 **Table `produits`**
+```sql
+CREATE TABLE produits (
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(255) NOT NULL,
+    description TEXT,
+    prix DECIMAL(10,2) NOT NULL,
+    idCategorie INT REFERENCES categories(id),
+    stock INT DEFAULT 0,
+    image VARCHAR(255)
+);
+```
+
+#### 📌 **Table `categories`**
+```sql
+CREATE TABLE categories (
+    id SERIAL PRIMARY KEY,
+    nom VARCHAR(255) NOT NULL
+);
+```
+
+---
+
+## 5. **Résumé des améliorations possibles**
+✅ Passer tous les fichiers en UTF-8 pour éviter les problèmes d'encodage.  
+✅ Vérifier que la redirection après modification fonctionne (`response.sendRedirect("admin.jsp")`).  
+✅ Ajouter un meilleur système de gestion des erreurs en base de données.  
+✅ Mettre en place un système de gestion des sessions pour différencier admin et utilisateur.  
+
+---
+
+Cette documentation résume l'essentiel du projet **E-commerce Fleurs**. Si tu veux des détails sur un fichier ou une fonctionnalité spécifique, fais-moi signe ! 🚀
+

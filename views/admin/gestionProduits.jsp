@@ -102,6 +102,7 @@
                     <th>Stock</th>
                     <th>Image</th>
                     <th>Actions</th>
+                    <th>Historique des Prix</th>
                 </tr>
             </thead>
             <tbody>
@@ -118,6 +119,9 @@
                         <td class="actions">
                             <a href="admin?action=modifierProduit&idProduit=${produit.idProduit}">Modifier</a>
                             <a href="admin?action=supprimerProduit&idProduit=${produit.idProduit}">Supprimer</a>
+                        </td>
+                        <td>
+                            <a href="admin?action=historiquePrix&idProduit=${produit.idProduit}">Voir l'Historique</a>
                         </td>
                     </tr>
                 </c:forEach>
