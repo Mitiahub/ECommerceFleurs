@@ -10,7 +10,7 @@
 
 - **Java (JSP/Servlets)** – 95,6 %
 - **HTML/CSS** – 3,2 %
-- **PLpgSQL (PostgreSQL)** – 1,2 % ([Import data from a Git repository | Postman Docs](https://learning.postman.com/docs/getting-started/importing-and-exporting/importing-from-git/?utm_source=chatgpt.com))
+- **PLpgSQL (PostgreSQL)** – 1,2 %
 
 ---
 
@@ -24,8 +24,22 @@ ECommerceFleurs/
 ├── WEB-INF/               # Fichiers de configuration Java EE
 ├── css/                   # Feuilles de style CSS
 ├── images/                # Images utilisées dans l'application
-├── views/                 # Pages JSP ou HTML
-├── index.html             # Page d'accueil
+├── views/                 # Pages JSP (interface utilisateur)
+│   ├── index.jsp          # Page d'accueil
+│   ├── produits.jsp       # Liste des produits
+│   ├── produit.jsp        # Détails d'un produit
+│   ├── panier.jsp         # Panier d'achat
+│   ├── paiement.jsp       # Page de paiement
+│   ├── paiementSuccess.jsp# Confirmation de paiement
+│   ├── paiementError.jsp  # Erreur de paiement
+│   ├── inscription.jsp    # Inscription utilisateur
+│   ├── connexion.jsp      # Connexion utilisateur
+│   ├── utilisateur.jsp    # Profil utilisateur
+│   ├── commandes.jsp      # Historique des commandes
+│   ├── categories.jsp     # Liste des catégories
+│   ├── promotions.jsp     # Promotions en cours
+│   ├── contact.jsp        # Page de contact
+│   └── admin/             # Interface d'administration
 ├── base.sql               # Script de création de la base de données
 ├── insert.sql             # Script d'insertion des données initiales
 ├── trigger.sql            # Déclencheurs pour la base de données
@@ -45,6 +59,9 @@ ECommerceFleurs/
 - **Panier d'Achat** : Ajout et gestion des produits sélectionnés.
 - **Processus de Commande** : Validation et traitement des commandes.
 - **Espace Administrateur** : Gestion des produits, des commandes et des utilisateurs.
+- **Authentification** : Inscription et connexion des utilisateurs.
+- **Promotions** : Affichage des offres promotionnelles en cours.
+- **Contact** : Formulaire de contact pour les utilisateurs.
 
 ---
 
@@ -70,11 +87,11 @@ ECommerceFleurs/
 
    - Importer le projet dans un IDE compatible (Eclipse, IntelliJ IDEA, NetBeans).
    - Configurer le serveur d'applications (Tomcat, GlassFish, etc.).
-   - Déployer l'application et démarrer le serveur. ([GitHub Repository Structure Best Practices | Code Factory Berlin](https://medium.com/code-factory-berlin/github-repository-structure-best-practices-248e6effc405?utm_source=chatgpt.com))
+   - Déployer l'application et démarrer le serveur.
 
 4. **Accéder à l'application** :
 
-   - Ouvrir un navigateur web et naviguer vers `http://localhost:8080/ECommerceFleurs/`.
+   - Ouvrir un navigateur web et naviguer vers `http://localhost:8080/ECommerceFleurs/views/index.jsp`.
 
 ---
 
@@ -99,7 +116,7 @@ Les contributions sont les bienvenues ! Si vous souhaitez améliorer le projet, 
 2. Créer une branche pour votre fonctionnalité (`git checkout -b feature/AmazingFeature`).
 3. Commiter vos modifications (`git commit -m 'Add some AmazingFeature'`).
 4. Pousser la branche (`git push origin feature/AmazingFeature`).
-5. Ouvrir une Pull Request. ([Deploying GitHub Projects with Vercel](https://vercel.com/docs/git/vercel-for-github?utm_source=chatgpt.com))
+5. Ouvrir une Pull Request.
 
 ---
 
@@ -107,4 +124,3 @@ Les contributions sont les bienvenues ! Si vous souhaitez améliorer le projet, 
 
 Pour toute question ou suggestion, veuillez contacter [Mitiahub](https://github.com/Mitiahub).
 
----
